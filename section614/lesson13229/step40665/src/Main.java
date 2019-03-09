@@ -4,26 +4,34 @@
  * По данным двум числам \( 1 \le a, b \le 2 \cdot 10^9 \)
  * найдите их наибольший общий делитель.
  */
-
+import java.math.BigInteger;
 import java.util.Scanner;
 
 class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        long a = scanner.nextLong();
-        long b = scanner.nextLong();
+        System.out.print("Input a and b: ");
+        BigInteger a = scanner.nextBigInteger();
+        BigInteger b = scanner.nextBigInteger();
 
-        long result = greatCommonDivisor(a, b);
+        BigInteger result = greatCommonDivisor(a, b);
 
-        System.out.println(result);
+        System.out.println("GCD of a and b: " + result);
 
     }
 
-    private static long greatCommonDivisor(long a, long b) {
-        if (a == 0) return b;
-        else if (b == 0) return a;
-        else if (a >= b) return greatCommonDivisor(a % b, b);
-        else return greatCommonDivisor(a, b % a);
+    private static BigInteger greatCommonDivisor(BigInteger a, BigInteger b) {
+        while (true) {
+            if (a.equals(BigInteger.ZERO)) return b;
+            else if (b.equals(BigInteger.ZERO)) return a;
+            else if (a.compareTo(b) >= 0) {
+                // a, b <- a % b, b
+                a = a.mod(b);
+            } else {
+                // a, b <- a, b % a
+                b = b.mod(a);
+            }
+        }
     }
 
 }

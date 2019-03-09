@@ -10,20 +10,15 @@ import java.util.*;
 class Main {
 
     private BigInteger fibonacci(int n) {
-        Map<Integer, BigInteger> cache = new HashMap<>();
-
-        if (n < 2) {
-            return BigInteger.valueOf(n);
+        BigInteger a = BigInteger.ZERO;
+        BigInteger b = BigInteger.ONE;
+        BigInteger c;
+        for (int i = 0; i < n; i++) {
+            c = a.add(b);
+            a = b;
+            b = c;
         }
-        if (cache.containsKey(n)) {
-            return cache.get(n);
-        } else {
-            for (int i = 2; i <= n; i++) {
-                BigInteger result = fibonacci(i - 1).add(fibonacci(i - 2));
-                cache.put(i, result);
-            }
-            return cache.get(n);
-        }
+        return a;
     }
 
     public void run(int n) {

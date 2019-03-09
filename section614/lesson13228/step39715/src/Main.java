@@ -4,24 +4,43 @@
  * \( F_1=1 \) и \( F_n=F_{n-1}+F_{n-2} \) при \( n \ge 2 \)).
  */
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.math.BigInteger;
+import java.util.*;
 
 class Main {
-    public static void main(String[] args) {
-        int n;
-        Scanner scanner = new Scanner(System.in);
-        n = scanner.nextInt();
-        List<Integer> fibArray = new ArrayList<>(n);
 
-        fibArray.add(0);
-        fibArray.add(1);
+    private BigInteger fibonacci(int n) {
+        Map<Integer, BigInteger> cache = new HashMap<>();
 
-        for (int i = 2; i <= n; i++) {
-            fibArray.add(i, fibArray.get(i - 1) + fibArray.get(i - 2));
+        if (n < 2) {
+            return BigInteger.valueOf(n);
         }
+        if (cache.containsKey(n)) {
+            return cache.get(n);
+        } else {
+            for (int i = 2; i <= n; i++) {
+                BigInteger result = fibonacci(i - 1).add(fibonacci(i - 2));
+                cache.put(i, result);
+            }
+            return cache.get(n);
+        }
+    }
 
-        System.out.println(fibArray.get(n));
+    public void run(int n) {
+        System.out.println("n: " + n + " fib number: " + fibonacci(n));
+    }
+
+
+    public static void main(String[] args) {
+        long startTime = System.currentTimeMillis();
+        Scanner in = new Scanner(System.in);
+        System.out.print("Input n: ");
+        int n = in.nextInt();
+
+        new Main().run(n);
+
+        long stopTime = System.currentTimeMillis();
+
+        System.out.println("Time: " + (stopTime - startTime) + " ms");
     }
 }
